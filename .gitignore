@@ -1,48 +1,8 @@
-# Python
 __pycache__/
 *.py[cod]
 *$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Environment
 .env
 .venv
 env/
 venv/
-ENV/
-
-# Editor/IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# Email data files
-recent_emails.txt
-emails.txt
-needs_response_report.txt
-opportunity_report.txt
-needs_response_emails.json
-categorized_emails.json
-response_history.json
-token_cache.json
-
-# OS files
-.DS_Store
-Thumbs.db 
+*.log

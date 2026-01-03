@@ -1,0 +1,62 @@
+Subject: Security alert
+From: Google <no-reply@accounts.google.com>
+Received: Sat, 03 Jan 2026 19:47:38 GMT
+Body: [image: Google]
+App password created to sign in to your account
+
+
+yaojinli01@gmail.com
+If you didn't generate this password for gmail, someone might be using your
+account. Check and secure your account now.
+Check activity
+<https://accounts.google.com/AccountChooser?Email=yaojinli01@gmail.com&continue=https://myaccount.google.com/alert/nt/1767469658514?rfn%3D20%26rfnc%3D1%26eid%3D-2801270008737798399%26et%3D0>
+You can also see security activity at
+https://myaccount.google.com/notificati
+------------------------------------------------
+Subject: 2-Step Verification turned on
+From: Google <no-reply@accounts.google.com>
+Received: Sat, 03 Jan 2026 19:42:35 GMT
+Body: [image: Google]
+2-Step Verification turned on
+
+
+yaojinli01@gmail.com
+
+Your Google Account yaojinli01@gmail.com is now protected with 2-Step
+Verification. When you sign in on a new or untrusted device, you’ll need
+your second factor to verify your identity.
+
+*Don't get locked out!*
+You can add a backup phone or get backup codes to use when you don’t have
+your second factor with you.
+You can review your 2SV settings
+<https://accounts.google.com/AccountChooser?Email=yaojinli01@gmail.c
+------------------------------------------------
+Subject: Security alert
+From: Google <no-reply@accounts.google.com>
+Received: Sat, 03 Jan 2026 19:42:21 GMT
+Body: [image: Google]
+Phone number added for 2-Step Verification
+
+
+yaojinli01@gmail.com
+Codes to sign in to your account now go to a new phone number. If you
+didn't add this number, someone might be using your account. Check and
+secure your account now.
+Check activity
+<https://accounts.google.com/AccountChooser?Email=yaojinli01@gmail.com&continue=https://myaccount.google.com/alert/nt/1767469341761?rfn%3D249%26rfnc%3D1%26eid%3D1746083216578783413%26et%3D0>
+You can also see security activity a
+------------------------------------------------
+Subject: BMO Credit Card Alert
+From: bmoalerts@bmo.com
+Received: Sat, 03 Jan 2026 19:12:30 +0000
+Body: <?xml version="1.0" encoding="UTF-8"?><html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/1999/xhtml"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> <title></title> <meta name="viewport" content="width=device-width, initial-scale=1" /> <link href="http://pages.e-news.bmo.com/fonts-nov2015" rel="stylesheet" type="text/css" /><style type="text/css"> div, p
+------------------------------------------------
+Subject: Ticket Received - Floor Bulging Issue-522 Argyle
+From: Tenants <tenants@bluejeanmanagement.com>
+Received: Fri, 02 Jan 2026 19:07:02 +0000
+Body:   Dear
+Jinli Yao,     
+We would like to acknowledge that we have
+received your email and a ticket has been created in our system. A support representative will be reviewing your request and will send you a personal response, typically within 48 business hours.   Our office is open Monday - Friday 8:30am - 4:30pm and is closed on weekends and all statutory holidays.      If this is a property emergency such as flood or loss of heat, and is outside of business hours, please call 403-536-7082
+------------------------------------------------

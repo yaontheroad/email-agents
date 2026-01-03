@@ -6,6 +6,9 @@ from openai import OpenAI
 from pydantic import BaseModel
 from typing import List, Optional, Literal
 import re
+import imaplib
+import email
+from email.header import decode_header
 
 # Load environment variables
 load_dotenv(override=True)
@@ -22,6 +25,12 @@ RECENT_EMAILS_FILE = "recent_emails.txt"
 RESPONSE_HISTORY_FILE = "response_history.json"
 NEEDS_RESPONSE_JSON = "needs_response_emails.json"
 NEEDS_RESPONSE_REPORT = "needs_response_report.txt"
+
+# Configuration from .env
+EMAIL_USER = os.getenv("EMAIL_USER")
+EMAIL_PASS = os.getenv("EMAIL_PASS")
+IMAP_SERVER = "imap.gmail.com"  # Change this if using Outlook (outlook.office365.com)
+RECENT_EMAILS_FILE = "recent_emails.txt"
 
 def load_response_history():
     """Load history of emails we've already responded to"""
@@ -69,6 +78,11 @@ def is_previously_responded(email, sent_emails):
     
     return False
 
+def connect_imap():
+    mail = imaplib.IMAP4_SSL(IMAP_SERVER)
+    mail.login(EMAIL_USER, EMAIL_PASS)
+    return mail
+
 # Function that should be implemented by the user to fetch emails
 def get_emails(hours=24):
     """
@@ -94,12 +108,50 @@ def get_emails(hours=24):
         - receivedDateTime: When the email was received
         - body: Email body content
     """
-    print(f"PLACEHOLDER: This function should fetch emails from the last {hours} hours")
-    print("Implement this function to connect to your email provider")
+    mail = connect_imap()
+    mail.select("inbox")
     
-    # Return empty list as placeholder
-    # When implementing, return actual email data from your provider
-    return []
+    # Calculate date for search
+    since_date = (datetime.now() - timedelta(days=1)).strftime("%d-%b-%Y")
+    status, messages = mail.search(None, f'(SINCE "{since_date}")')
+    
+    email_list = []
+    with open(RECENT_EMAILS_FILE, "w", encoding="utf-8") as f:
+        for num in messages[0].split()[::-1]:  # Get latest first
+            res, msg_data = mail.fetch(num, "(RFC822)")
+            for response_part in msg_data:
+                if isinstance(response_part, tuple):
+                    msg = email.message_from_bytes(response_part[1])
+                    
+                    # Parse Headers
+                    subject = decode_header(msg["Subject"])[0][0]
+                    if isinstance(subject, bytes): subject = subject.decode()
+                    sender = msg.get("From")
+                    date_str = msg.get("Date")
+                    
+                    # Extract Body
+                    body = ""
+                    if msg.is_multipart():
+                        for part in msg.walk():
+                            if part.get_content_type() == "text/plain":
+                                body = part.get_payload(decode=True).decode()
+                    else:
+                        body = msg.get_payload(decode=True).decode()
+
+                    email_data = {
+                        "subject": subject,
+                        "from": sender,
+                        "receivedDateTime": date_str,
+                        "body": body[:1000] # Truncate for efficiency
+                    }
+                    email_list.append(email_data)
+
+                    # Save to file as requested in docstring
+                    f.write(f"Subject: {subject}\nFrom: {sender}\nReceived: {date_str}\nBody: {body[:500]}\n")
+                    f.write("-" * 48 + "\n")
+
+    mail.logout()
+    return email_list
 
 # Function that should be implemented by the user to get sent emails
 def get_sent_emails(days=7):
@@ -120,12 +172,33 @@ def get_sent_emails(days=7):
         - recipients: List of recipient email addresses
         - sent_time: When the email was sent
     """
-    print(f"PLACEHOLDER: This function should fetch sent emails from the last {days} days")
-    print("Implement this function to connect to your email provider")
-    
-    # Return empty list as placeholder
-    # When implementing, return actual sent email data from your provider
-    return []
+    mail = connect_imap()
+    # "Sent" folder name varies by provider: Gmail uses "[Gmail]/Sent Mail"
+    status, folder_list = mail.list()
+    sent_folder = '"[Gmail]/Sent Mail"' # Default for Gmail
+    mail.select(sent_folder)
+
+    since_date = (datetime.now() - timedelta(days=days)).strftime("%d-%b-%Y")
+    status, messages = mail.search(None, f'(SINCE "{since_date}")')
+
+    sent_list = []
+    for num in messages[0].split():
+        res, msg_data = mail.fetch(num, "(RFC822)")
+        for response_part in msg_data:
+            if isinstance(response_part, tuple):
+                msg = email.message_from_bytes(response_part[1])
+                
+                subject = decode_header(msg["Subject"])[0][0]
+                if isinstance(subject, bytes): subject = subject.decode()
+
+                sent_list.append({
+                    "subject": subject,
+                    "recipients": msg.get("To"),
+                    "sent_time": msg.get("Date")
+                })
+
+    mail.logout()
+    return sent_list
 
 def read_emails():
     """Read emails from recent_emails.txt and return as a list of dictionaries"""
