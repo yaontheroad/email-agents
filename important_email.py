@@ -128,6 +128,9 @@ def get_emails(hours=24):
                     if isinstance(subject, bytes): subject = subject.decode()
                     sender = msg.get("From")
                     date_str = msg.get("Date")
+                    message_id = msg.get("Message-ID")
+                    if message_id:
+                        message_id = message_id.strip()
                     
                     # Extract Body
                     body = ""
@@ -142,12 +145,13 @@ def get_emails(hours=24):
                         "subject": subject,
                         "from": sender,
                         "receivedDateTime": date_str,
+                        "message_id": message_id,
                         "body": body[:1000] # Truncate for efficiency
                     }
                     email_list.append(email_data)
 
                     # Save to file as requested in docstring
-                    f.write(f"Subject: {subject}\nFrom: {sender}\nReceived: {date_str}\nBody: {body[:500]}\n")
+                    f.write(f"Subject: {subject}\nFrom: {sender}\nReceived: {date_str}\nMessage-ID: {message_id}\nBody: {body[:500]}\n")
                     f.write("-" * 48 + "\n")
 
     mail.logout()
@@ -231,6 +235,8 @@ def read_emails():
             current_email["from"] = line[6:]
         elif line.startswith("Received: "):
             current_email["received"] = line[10:]
+        elif line.startswith("Message-ID: "):
+            current_email["message_id"] = line[12:].strip()
         elif line.startswith("Body: "):
             current_body_lines = [line[6:]]
         elif line.startswith("-" * 50):
@@ -349,6 +355,7 @@ def find_important_emails():
                 "subject": email["subject"],
                 "from": email["from"],
                 "received": email.get("received", datetime.now().isoformat()),
+                "message_id": email.get("message_id"),
                 "body": email["body"][:1000] + ("..." if len(email["body"]) > 1000 else ""),  # Truncate for readability
                 "analysis": analysis.model_dump(),
                 "already_responded": already_responded
@@ -428,7 +435,7 @@ def find_important_emails():
             print(f"Time Sensitive: {'YES' if email['analysis']['time_sensitive'] else 'No'}")
             print(f"Topics: {', '.join(email['analysis']['topics'])}")
             if email["already_responded"]:
-                print(f"STATUS: ✅ ALREADY RESPONDED")
+                print(f"STATUS: [ALREADY RESPONDED]")
             print(f"Reason: {email['analysis']['reason']}")
             print("-" * 50)
     else:

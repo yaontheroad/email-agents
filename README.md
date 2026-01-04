@@ -9,26 +9,26 @@ An AI-powered email management system that helps you achieve inbox zero by intel
 ## 🌟 Features
 
 - **Smart Email Filtering**: Identifies which emails actually require your attention
-- **Business Opportunity Detection**: Categorizes emails into sponsorships, business inquiries, and others
 - **Automated Response Generation**: Drafts personalized responses to important emails
-- **Provider Agnostic**: Works with any email provider (Gmail, Outlook, etc.) through simple adapter functions
+- **Smart Reply System**: Automatically detects threading information to reply to existing email chains correctly
+- **Provider Agnostic**: Configured for IMAP/SMTP (Gmail, Outlook, etc.)
 - **Spam & Marketing Detection**: Intelligently filters out mass marketing emails from genuine opportunities
-- **Local LLM Support**: Option to use local LLMs for sensitive email processing to maintain privacy
+- **Interactive Review**: Review, edit, or skip generated responses before sending
 
 ## 📋 Components
 
-The system consists of three main components:
+The system consists of two main components:
 
-1. **Important Email Detector** (`important_email2.py`): Analyzes your inbox and identifies emails that truly need your attention
-2. **Email Categorizer** (`send_mail2.py`): Categorizes business-related emails and generates opportunity reports
-3. **Email Response Generator** (`email_responder2.py`): Creates draft responses that you can review, edit, and send
+1. **Important Email Detector** (`important_email.py`): Analyzes your inbox (via IMAP), identifies emails that truly need your attention, and saves them to a structured JSON file.
+2. **Email Response Generator** (`email_responder.py`): Reads the analyzed emails, creates draft responses using AI, and allows you to review and send replies (via SMTP).
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
 - Python 3.8+
-- OpenAI API key (or a local LLM for sensitive data)
+- OpenAI API key
+- Email account with IMAP/SMTP access (e.g., Gmail with App Password)
 
 ### Installation
 
@@ -40,140 +40,73 @@ The system consists of three main components:
 
 2. Install the required dependencies:
    ```bash
-   pip install python-dotenv openai
+   pip install -r requirements.txt
    ```
 
-3. Create a `.env` file with your OpenAI API key:
+3. Create a `.env` file with your credentials:
    ```
    OPENAI_API_KEY=your_openai_api_key_here
+   EMAIL_USER=your_email@gmail.com
+   EMAIL_PASS=your_app_password
    ```
 
-### Connecting to Your Email Provider
-
-To use the system with your email provider, you need to implement several provider-specific functions:
-
-#### In `important_email2.py`:
-
-```python
-def get_emails(hours=24):
-    """Implement this function to fetch emails from your provider"""
-    # Your implementation here
-    
-def get_sent_emails(days=7):
-    """Implement this function to fetch sent emails from your provider"""
-    # Your implementation here
-```
-
-#### In `send_mail2.py`:
-
-```python
-def get_emails(hours=72):
-    """Implement this function to fetch emails from your provider"""
-    # Your implementation here
-    
-def send_email(subject, body, recipient_email):
-    """Implement this function to send emails through your provider"""
-    # Your implementation here
-```
+   > **Note:** For Gmail, you must use an [App Password](https://support.google.com/accounts/answer/185833), not your regular login password.
 
 ## 🔍 Usage
 
 ### Step 1: Find Important Emails
 
 ```bash
-python important_email2.py
+python important_email.py
 ```
 
 This will:
-- Scan your inbox for emails from the last 24 hours
-- Analyze each email for importance
-- Generate a report of emails requiring your attention
+- Connect to your email via IMAP
+- Fetch emails from the last 24 hours
+- Analyze each email for importance using OpenAI
+- Check if you've already responded (by checking your Sent folder)
+- Save important emails to `needs_response_emails.json` and generate a report in `needs_response_report.txt`
 
-### Step 2: Categorize Business Opportunities
-
-```bash
-python send_mail2.py
-```
-
-This will:
-- Analyze emails from the last 72 hours
-- Categorize them as sponsorships, business inquiries, or other
-- Generate a report of high-value opportunities
-
-### Step 3: Generate and Send Responses
+### Step 2: Generate and Send Responses
 
 ```bash
-python email_responder2.py
+python email_responder.py
 ```
 
 This will:
 - Read important emails identified in Step 1
-- Draft customized responses for each email
-- Let you review, edit, and send the responses with a simple Y/N interface
+- Draft customized responses for each email using AI
+- Present each draft for your review
+- Allow you to:
+  - **y**: Send the response (replies to the original thread)
+  - **n**: Skip this email
+  - **edit**: Rewrite the response based on your instructions
+  - **skip**: Skip without action
 
 ## ⚙️ Configuration
 
-You can adjust the system's behavior by modifying constants at the top of each file:
+You can adjust the system's behavior by modifying constants in the files:
 
-- Change the time period for email scanning (24 hours, 72 hours, etc.)
-- Modify file paths for generated reports
-- Adjust AI parameters for more detailed analysis
-
-## 📡 Using Local LLMs for Sensitive Data
-
-For processing sensitive emails that shouldn't be sent to external APIs, you can configure the system to use local LLMs:
-
-1. Modify the client creation in each file to use your local LLM instead of OpenAI:
-
-```python
-# Instead of:
-client = OpenAI()
-
-# Use your local LLM client:
-client = YourLocalLLMClient()  # Replace with your local LLM implementation
-```
-
-2. Update the model calls to match your local LLM's interface:
-
-```python
-# Modify model parameters to work with your local LLM
-response = client.generate(
-    model="your-local-model",  # Your local model name
-    prompt=prompt,             # Your prompt text
-    # Other parameters specific to your local LLM
-)
-```
-
-Popular local LLM options include:
-- [LlamaCpp](https://github.com/ggerganov/llama.cpp)
-- [Ollama](https://github.com/ollama/ollama)
-- [LocalAI](https://github.com/go-skynet/LocalAI)
-
-This approach ensures that sensitive email content never leaves your local environment.
+- **IMAP/SMTP Settings**: In `important_email.py` and `email_responder.py`
+  - Default is `imap.gmail.com` and `smtp.gmail.com`
+  - Change to `outlook.office365.com` / `smtp.office365.com` for Outlook
+- **Time Window**: Change `hours=24` in `important_email.py` to scan a different period
+- **AI Model**: The system defaults to `gpt-4.1` (ensure you have access or change to `gpt-4o` / `gpt-3.5-turbo`)
 
 ## 📁 Output Files
 
 The system generates several output files:
-
+- `needs_response_emails.json`: Structured data of important emails (used by the responder)
 - `needs_response_report.txt`: Human-readable report of emails needing responses
-- `opportunity_report.txt`: Report of business opportunities
-- `response_history.json`: Tracking which emails have been responded to
+- `recent_emails.txt`: Raw text dump of fetched emails (for debugging)
+- `response_history.json`: Log of emails that have been responded to
 
 ## 🛡️ Security
 
-- All API keys are stored in the `.env` file (not in Git)
-- The `.gitignore` file prevents sensitive data from being committed
-- For highly sensitive emails, use local LLMs instead of sending data to external APIs
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to submit issues or pull requests if you have ideas for improvements.
+- All API keys and passwords are stored in the `.env` file (not in Git)
+- The `.gitignore` file should prevent sensitive data from being committed
+- **Recommendation**: Use App Passwords instead of main account passwords
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgements
-
-- [OpenAI](https://openai.com/) for providing the GPT models that power the email analysis
-- All contributors and users of this project

@@ -1,7 +1,40 @@
 ==================================================
 EMAILS REQUIRING RESPONSE
-Generated on: 2026-01-03T13:32:35.032800
+Generated on: 2026-01-03T17:38:06.021921
 ==================================================
 
-No emails requiring immediate response were found.
+Subject: Coffee chat next week?
+From: Jinli Yao <yaontheway@gmail.com>
+Received: Sun, 4 Jan 2026 00:04:46 +0000
+Importance: HIGH
+Time Sensitive: YES
+Topics: coffee meeting, partnership opportunities, scheduling
+Reason: Personalized outreach from a real contact requesting to schedule a meeting to discuss specific partnership opportunities. The sender is requesting availability for particular dates and clearly expects a reply.
+STATUS: ✅ ALREADY RESPONDED
+Preview: Hey,
+Are you free for a quick coffee chat next Tuesday or Wednesday morning?
+I'd love to catch up and discuss the new partnership opportunities we briefly touched on at the conference last month. I think there's some good overlap in what we're building.
+Let me know what works for you.
+Cheers,
+Mike R...
+
+--------------------------------------------------
+
+Subject: Urgent: Project Timeline Update Required - Q3 Migration
+From: Jinli Yao <yaontheway@gmail.com>
+Received: Sun, 4 Jan 2026 00:02:45 +0000
+Importance: HIGH
+Time Sensitive: YES
+Topics: Q3 migration project, timeline approval, infrastructure setup
+Reason: Personalized, time-sensitive request from a project manager requiring specific review and sign-off to unblock an important project milestone.
+STATUS: ✅ ALREADY RESPONDED
+Preview: Hi,
+We need to finalize the timeline for the Q3 migration project by EOD tomorrow. Can you please review the latest draft and let me know if you have any objections?
+We are blocked on the infrastructure setup until we get your sign-off.
+Best regards,
+Sarah Jenkins
+Senior Project Manager
+------------...
+
+--------------------------------------------------
 

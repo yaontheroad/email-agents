@@ -1,0 +1,24 @@
+{
+  "responded_emails": [
+    {
+      "subject": "Coffee chat next week?",
+      "from": "Jinli Yao <yaontheway@gmail.com>",
+      "responded_at": "2026-01-03T17:29:39.018056"
+    },
+    {
+      "subject": "Urgent: Project Timeline Update Required - Q3 Migration",
+      "from": "Jinli Yao <yaontheway@gmail.com>",
+      "responded_at": "2026-01-03T17:29:53.360919"
+    },
+    {
+      "subject": "Coffee chat next week?",
+      "from": "Jinli Yao <yaontheway@gmail.com>",
+      "responded_at": "2026-01-03T17:39:42.873252"
+    },
+    {
+      "subject": "Urgent: Project Timeline Update Required - Q3 Migration",
+      "from": "Jinli Yao <yaontheway@gmail.com>",
+      "responded_at": "2026-01-03T17:39:52.234397"
+    }
+  ]
+}

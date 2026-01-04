@@ -1,4 +1,43 @@
 {
-  "last_updated": "2026-01-03T13:32:35.003616",
-  "needs_response_emails": []
+  "last_updated": "2026-01-03T17:38:05.993785",
+  "needs_response_emails": [
+    {
+      "subject": "Coffee chat next week?",
+      "from": "Jinli Yao <yaontheway@gmail.com>",
+      "received": "Sun, 4 Jan 2026 00:04:46 +0000",
+      "message_id": "<TYZPR04MB56543EB2434E5CF84AC284E3ADB9A@TYZPR04MB5654.apcprd04.prod.outlook.com>",
+      "body": "Hey,\nAre you free for a quick coffee chat next Tuesday or Wednesday morning?\nI'd love to catch up and discuss the new partnership opportunities we briefly touched on at the conference last month. I think there's some good overlap in what we're building.\nLet me know what works for you.\nCheers,\nMike Ross\n------------------------------------------------",
+      "analysis": {
+        "importance": "high",
+        "reason": "Personalized outreach from a real contact requesting to schedule a meeting to discuss specific partnership opportunities. The sender is requesting availability for particular dates and clearly expects a reply.",
+        "needs_response": true,
+        "time_sensitive": true,
+        "topics": [
+          "coffee meeting",
+          "partnership opportunities",
+          "scheduling"
+        ]
+      },
+      "already_responded": true
+    },
+    {
+      "subject": "Urgent: Project Timeline Update Required - Q3 Migration",
+      "from": "Jinli Yao <yaontheway@gmail.com>",
+      "received": "Sun, 4 Jan 2026 00:02:45 +0000",
+      "message_id": "<TYZPR04MB5654C3D4B74C0815B2BBD128ADB9A@TYZPR04MB5654.apcprd04.prod.outlook.com>",
+      "body": "Hi,\nWe need to finalize the timeline for the Q3 migration project by EOD tomorrow. Can you please review the latest draft and let me know if you have any objections?\nWe are blocked on the infrastructure setup until we get your sign-off.\nBest regards,\nSarah Jenkins\nSenior Project Manager\n------------------------------------------------",
+      "analysis": {
+        "importance": "high",
+        "reason": "Personalized, time-sensitive request from a project manager requiring specific review and sign-off to unblock an important project milestone.",
+        "needs_response": true,
+        "time_sensitive": true,
+        "topics": [
+          "Q3 migration project",
+          "timeline approval",
+          "infrastructure setup"
+        ]
+      },
+      "already_responded": true
+    }
+  ]
 }

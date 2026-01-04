@@ -3,54 +3,59 @@ import json
 import re
 from openai import OpenAI
 from dotenv import load_dotenv
-from send_mail2 import send_email  # Importing the placeholder send_email function
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 # Load environment variables
 load_dotenv(override=True)
 
+# Configuration from .env
+EMAIL_USER = os.getenv("EMAIL_USER")
+EMAIL_PASS = os.getenv("EMAIL_PASS")
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 587
+
 # File paths
 NEEDS_RESPONSE_REPORT = "needs_response_report.txt"
+NEEDS_RESPONSE_JSON = "needs_response_emails.json"
 RESPONSE_HISTORY_FILE = "response_history.json"
 
-def extract_emails_from_report(report_path=NEEDS_RESPONSE_REPORT):
-    """Extract emails from the needs_response_report.txt file"""
+def load_emails_from_json(json_path=NEEDS_RESPONSE_JSON):
+    """Load emails from the needs_response_emails.json file"""
     try:
-        with open(report_path, "r", encoding="utf-8") as f:
-            content = f.read()
-        
-        # Split the report by the separator
-        email_sections = content.split("-" * 50)
-        
-        # Extract information from each section
-        emails = []
-        for section in email_sections:
-            if not section.strip():
-                continue
+        with open(json_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
             
-            # Extract key details using regex
-            subject_match = re.search(r"Subject: (.+?)$", section, re.MULTILINE)
-            from_match = re.search(r"From: (.+?)$", section, re.MULTILINE)
-            email_address_match = re.search(r"<(.+?)>", section)
-            preview_match = re.search(r"Preview: (.+?)$", section, re.MULTILINE | re.DOTALL)
-            already_responded = "ALREADY RESPONDED" in section
-            
-            if subject_match and from_match:
-                email_data = {
-                    "subject": subject_match.group(1).strip(),
-                    "from": from_match.group(1).strip(),
-                    "email_address": email_address_match.group(1).strip() if email_address_match else None,
-                    "preview": preview_match.group(1).strip() if preview_match else "No preview available",
-                    "already_responded": already_responded
-                }
-                emails.append(email_data)
+        emails = data.get("needs_response_emails", [])
         
-        return emails
+        # Normalize keys to match what the rest of the code expects
+        normalized_emails = []
+        for email in emails:
+            email_data = {
+                "subject": email.get("subject", ""),
+                "from": email.get("from", ""),
+                "email_address": None, # Will extract below
+                "preview": email.get("body", "")[:500],
+                "full_body": email.get("body", ""),
+                "already_responded": email.get("already_responded", False),
+                "message_id": email.get("message_id")
+            }
+            
+            # Extract email address from 'from' field
+            email_address_match = re.search(r"<(.+?)>", email_data["from"])
+            if email_address_match:
+                email_data["email_address"] = email_address_match.group(1).strip()
+            
+            normalized_emails.append(email_data)
+            
+        return normalized_emails
     
     except FileNotFoundError:
-        print(f"Error: File {report_path} not found.")
+        print(f"Error: File {json_path} not found.")
         return []
     except Exception as e:
-        print(f"Error extracting emails from report: {e}")
+        print(f"Error loading emails from JSON: {e}")
         return []
 
 def save_response_history(new_response):
@@ -144,16 +149,66 @@ def generate_response(client, email_data, edit_instructions=None):
         print(f"Error generating response: {e}")
         return None
 
+def send_email(subject, body, recipient_email, reply_to_id=None):
+    """
+    Send an email using the configured SMTP server.
+    
+    Args:
+        subject: Email subject
+        body: Email body content
+        recipient_email: Recipient's email address
+        reply_to_id: Optional Message-ID of the email being replied to
+        
+    Returns:
+        bool: True if the email was sent successfully, False otherwise
+    """
+    if not EMAIL_USER or not EMAIL_PASS:
+        print("Error: EMAIL_USER and EMAIL_PASS environment variables must be set.")
+        return False
+
+    try:
+        # Create message container
+        msg = MIMEMultipart()
+        msg['From'] = EMAIL_USER
+        msg['To'] = recipient_email
+        msg['Subject'] = subject
+        
+        # Add headers for threading if this is a reply
+        if reply_to_id:
+            msg['In-Reply-To'] = reply_to_id
+            msg['References'] = reply_to_id
+
+        # Attach body
+        msg.attach(MIMEText(body, 'plain'))
+
+        # Create server connection
+        print(f"Connecting to {SMTP_SERVER}...")
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            
+            # Login and send
+            print(f"Logging in as {EMAIL_USER}...")
+            server.login(EMAIL_USER, EMAIL_PASS)
+            
+            print(f"Sending email to {recipient_email}...")
+            server.send_message(msg)
+        
+        return True
+        
+    except Exception as e:
+        print(f"Error sending email: {e}")
+        return False
+
 def process_responses():
     """Process and send responses to important emails"""
     # Initialize OpenAI client
     client = OpenAI()
     
-    # Extract emails from report
-    emails = extract_emails_from_report()
+    # Load emails from JSON
+    emails = load_emails_from_json()
     
     if not emails:
-        print("No emails requiring response found in the report.")
+        print("No emails requiring response found.")
         return
     
     # Count new emails (not already responded to)
@@ -206,7 +261,15 @@ def process_responses():
             if choice == 'y':
                 if email_data['email_address']:
                     print(f"Sending email to {email_data['email_address']}...")
-                    result = send_email(subject_line, body, email_data['email_address'])
+                    
+                    # Pass the original message ID for threading
+                    result = send_email(
+                        subject_line, 
+                        body, 
+                        email_data['email_address'],
+                        reply_to_id=email_data.get('message_id')
+                    )
+                    
                     if result:
                         print("Email sent successfully!")
                         # Record this response in history
@@ -251,4 +314,5 @@ def process_responses():
 if __name__ == "__main__":
     # Import datetime here to avoid circular imports 
     from datetime import datetime
-    process_responses() 
+    process_responses()
+

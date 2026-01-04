@@ -1,6 +1,83 @@
+Subject: Your Receipt for Order #88219
+From: Jinli Yao <yaontheway@gmail.com>
+Received: Sun, 4 Jan 2026 00:07:00 +0000
+Message-ID: <TYZPR04MB56549D53EE78BB42634316D2ADB9A@TYZPR04MB5654.apcprd04.prod.outlook.com>
+Body: Thank you for your purchase. Your order has been processed.
+
+Order Summary:
+ - Cloud Storage Plan (Monthly): $15.00
+
+Total: $15.00
+
+You can view your invoice online. This is an automated message, please do not reply to this email.
+
+
+------------------------------------------------
+Subject: LAST CHANCE: 50% Off Annual Subscriptions Ends Tonight!
+From: Jinli Yao <yaontheway@gmail.com>
+Received: Sun, 4 Jan 2026 00:06:16 +0000
+Message-ID: <TYZPR04MB565468D81883CFAEA970839BADB9A@TYZPR04MB5654.apcprd04.prod.outlook.com>
+Body: Don't miss out on our biggest sale of the year.
+
+Upgrade now to get premium features for half the price. This offer expires at midnight.
+
+[Button: Claim Offer]
+
+Unsubscribe | View in Browser
+
+
+------------------------------------------------
+Subject: Quick question about your website optimization
+From: Jinli Yao <yaontheway@gmail.com>
+Received: Sun, 4 Jan 2026 00:05:32 +0000
+Message-ID: <TYZPR04MB5654DB400F08E749E2B7F361ADB9A@TYZPR04MB5654.apcprd04.prod.outlook.com>
+Body: Hi there,
+
+I was browsing your website earlier and noticed a few on-page elements that could be optimized to improve your load speeds.
+
+We help companies like yours improve their Core Web Vitals score by 30% on average. Would you be open to a 15-minute call next week to see a customized report?
+
+Best,
+John Doe
+
+
+------------------------------------------------
+Subject: Coffee chat next week?
+From: Jinli Yao <yaontheway@gmail.com>
+Received: Sun, 4 Jan 2026 00:04:46 +0000
+Message-ID: <TYZPR04MB56543EB2434E5CF84AC284E3ADB9A@TYZPR04MB5654.apcprd04.prod.outlook.com>
+Body: Hey,
+
+Are you free for a quick coffee chat next Tuesday or Wednesday morning?
+
+I'd love to catch up and discuss the new partnership opportunities we briefly touched on at the conference last month. I think there's some good overlap in what we're building.
+
+Let me know what works for you.
+
+Cheers,
+Mike Ross
+
+
+------------------------------------------------
+Subject: Urgent: Project Timeline Update Required - Q3 Migration
+From: Jinli Yao <yaontheway@gmail.com>
+Received: Sun, 4 Jan 2026 00:02:45 +0000
+Message-ID: <TYZPR04MB5654C3D4B74C0815B2BBD128ADB9A@TYZPR04MB5654.apcprd04.prod.outlook.com>
+Body: Hi,
+
+We need to finalize the timeline for the Q3 migration project by EOD tomorrow. Can you please review the latest draft and let me know if you have any objections?
+We are blocked on the infrastructure setup until we get your sign-off.
+
+Best regards,
+Sarah Jenkins
+Senior Project Manager
+
+
+------------------------------------------------
 Subject: Security alert
 From: Google <no-reply@accounts.google.com>
 Received: Sat, 03 Jan 2026 19:47:38 GMT
+Message-ID: <q7wA3gmRtBF-MGkh603OKQ@notifications.google.com>
 Body: [image: Google]
 App password created to sign in to your account
 
@@ -16,6 +93,7 @@ https://myaccount.google.com/notificati
 Subject: 2-Step Verification turned on
 From: Google <no-reply@accounts.google.com>
 Received: Sat, 03 Jan 2026 19:42:35 GMT
+Message-ID: <_4Qiv2wuCwHITqHIxfohSA@notifications.google.com>
 Body: [image: Google]
 2-Step Verification turned on
 
@@ -35,6 +113,7 @@ You can review your 2SV settings
 Subject: Security alert
 From: Google <no-reply@accounts.google.com>
 Received: Sat, 03 Jan 2026 19:42:21 GMT
+Message-ID: <61GSspS--kcl9sPfFHZt1w@notifications.google.com>
 Body: [image: Google]
 Phone number added for 2-Step Verification
 
@@ -50,11 +129,13 @@ You can also see security activity a
 Subject: BMO Credit Card Alert
 From: bmoalerts@bmo.com
 Received: Sat, 03 Jan 2026 19:12:30 +0000
+Message-ID: <a3462c5e-5e92-e6d0-1a87-ceaf16640679@bmo.com>
 Body: <?xml version="1.0" encoding="UTF-8"?><html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/1999/xhtml"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> <title></title> <meta name="viewport" content="width=device-width, initial-scale=1" /> <link href="http://pages.e-news.bmo.com/fonts-nov2015" rel="stylesheet" type="text/css" /><style type="text/css"> div, p
 ------------------------------------------------
 Subject: Ticket Received - Floor Bulging Issue-522 Argyle
 From: Tenants <tenants@bluejeanmanagement.com>
 Received: Fri, 02 Jan 2026 19:07:02 +0000
+Message-ID: <695817561937c_2375ff3c45019a8.sidekiq-frequent-fd-poduseast1-main-green-64d45c8748-2lnl6@notification.freshdesk.com>
 Body:   Dear
 Jinli Yao,     
 We would like to acknowledge that we have
